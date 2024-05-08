@@ -1,0 +1,25 @@
+.loginBox {
+  position: relative;
+  top: 200px;
+  width: 350px;
+  height: 250px;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+.signupTxt {
+  position: relative;
+  top: 250px;
+  cursor: pointer;
+}
+.loginForm {
+  position: relative;
+  display: flex;
+  height: 200px;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 300px;
+}
+.memberLogin {
+  position: relative;
+  top: 5px;
+}
