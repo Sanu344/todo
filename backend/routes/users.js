@@ -1,6 +1,5 @@
 const express = require("express");
 const users = express.Router();
-const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const { User, ValidateUser } = require("../models/users");
 
