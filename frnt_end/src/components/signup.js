@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import "./signup.css";
-
+import axios from "axios";
 function Signup() {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
@@ -18,8 +18,26 @@ function Signup() {
 
     if (password !== password2) return alert("Password Mismatch");
 
-    alert("Sucessfully registered");
-    navigate("/");
+    const userData = {
+      email: email,
+      password: password,
+    };
+    try {
+      axios
+        .post("http://localhost:5000/api/register", userData)
+        .then((res) => {
+          console.log(res.data.data);
+          if (res.data.status) {
+            window.alert("Registration Successful");
+            navigate("/");
+          } else {
+            window.alert(res.data.messsage);
+          }
+        })
+        .catch((err) => window.alert(err.response.data.message));
+    } catch (e) {
+      window.alert(e.message);
+    }
   };
 
   return (

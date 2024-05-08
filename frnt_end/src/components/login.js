@@ -11,8 +11,6 @@ function Login() {
     const email = details.loginEmail;
     const password = details.loginPassword;
 
-    console.log(details.loginEmail, " ", details.loginPassword);
-
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!isValidEmail) return alert("Invalid email format");
 
@@ -20,9 +18,6 @@ function Login() {
       email: details.loginEmail,
       password: details.loginPassword,
     };
-
-    localStorage.setItem("allowed", JSON.stringify(true));
-
     try {
       axios
         .post("http://localhost:5000/api/login", userData)
