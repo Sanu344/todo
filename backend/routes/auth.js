@@ -37,6 +37,7 @@ auth.post("/", async (req, res) => {
       status: true,
       alert: true,
       token: token,
+      user: user.email,
       messsage: "Login Sucessful",
     });
   } catch (error) {

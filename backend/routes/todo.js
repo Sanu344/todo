@@ -1,16 +1,8 @@
 const express = require("express");
 const todo = express.Router();
 const { Todo, Validate } = require("../models/todo");
-
-todo.post("/add", async (req, res) => {
-  const { error } = Validate(req.body);
-  if (error)
-    return res.send({
-      status: false,
-      alert: true,
-      messsage: error.details[0].message,
-    });
-
+const auth = require("../middlewares/authorisation");
+todo.post("/add", auth, async (req, res) => {
   const to = new Todo({
     email: req.body.email,
     activity: req.body.activity,
