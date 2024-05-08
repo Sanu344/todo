@@ -24,7 +24,7 @@ function Signup() {
     };
     try {
       axios
-        .post("http://localhost:5000/api/register", userData)
+        .post("https://to-do-backend-gy2p.onrender.com/api/register", userData)
         .then((res) => {
           console.log(res.data.data);
           if (res.data.status) {

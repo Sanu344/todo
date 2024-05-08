@@ -14,7 +14,7 @@ function Main() {
     if (data.token) {
       try {
         axios
-          .post("http://localhost:5000/api/todo/all", data)
+          .post("https://to-do-backend-gy2p.onrender.com/api/todo/all", data)
           .then((res) => {
             if (res.data.status) {
               localStorage.setItem("activities", JSON.stringify(res.data.data));
@@ -39,7 +39,7 @@ function Main() {
     };
     try {
       axios
-        .post("http://localhost:5000/api/todo/add", data)
+        .post("https://to-do-backend-gy2p.onrender.com/api/todo/add", data)
         .then((res) => {
           if (res.data.status) {
             localStorage.setItem("activities", JSON.stringify(res.data.data));
