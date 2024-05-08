@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 
 function authorization(req, res, next) {
+  console.log(req.token);
   try {
     const decoded = jwt.verify(req.body.token, "secretKey");
     req.body.email = decoded.email;

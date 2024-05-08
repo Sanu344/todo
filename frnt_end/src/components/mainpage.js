@@ -5,36 +5,62 @@ import { useForm } from "react-hook-form";
 import "./mainpage.css";
 
 function Main() {
+  const [activity, setActivity] = useState([]);
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
 
-  const data = JSON.parse(localStorage.getItem("token"));
-
-  try {
-    axios
-      .post("http://localhost:5000/api/todo/all", data)
-      .then((res) => {
-        if (res.data.status) {
-          localStorage.setItem("activities", JSON.stringify(res.data.data));
-        } else {
-          window.alert(res.data.messsage);
-        }
-      })
-      .catch((err) => window.alert(err.response.data.message));
-  } catch (e) {
-    window.alert(e.message);
-  }
+  const data = { token: JSON.parse(localStorage.getItem("token")) };
+  useEffect(() => {
+    if (data.token) {
+      try {
+        axios
+          .post("http://localhost:5000/api/todo/all", data)
+          .then((res) => {
+            if (res.data.status) {
+              localStorage.setItem("activities", JSON.stringify(res.data.data));
+              setActivity(res.data.data);
+            } else {
+              window.alert(res.data.messsage);
+            }
+          })
+          .catch((err) => window.alert(err.response.data.message));
+      } catch (e) {
+        window.alert(e.message);
+      }
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   const onSubmit = (task) => {
-    console.log(task.todoAddTask);
+    const data = {
+      token: JSON.parse(localStorage.getItem("token")),
+      activity: task.todoAddTask,
+    };
+    try {
+      axios
+        .post("http://localhost:5000/api/todo/add", data)
+        .then((res) => {
+          if (res.data.status) {
+            localStorage.setItem("activities", JSON.stringify(res.data.data));
+            setActivity(res.data.data);
+            alert(res.data.messsage);
+          } else {
+            window.alert(res.data.messsage);
+          }
+        })
+        .catch((err) => window.alert(err.message));
+    } catch (e) {
+      window.alert(e.message);
+    }
   };
-
-  let arr = [1, 2, 2, 3];
   return (
     <>
       <div className="todoMain">
         <div className="todoTop">
-          <h1 className="todoUser">Main Page </h1>
+          <h1 className="todoUser">
+            {JSON.parse(localStorage.getItem("user"))}{" "}
+          </h1>
         </div>
         <div className="todoSide">
           <center>
@@ -78,16 +104,17 @@ function Main() {
           </div>
           <table className="table">
             <tbody>
-              {arr.map((items, index) => {
-                return (
-                  <tr key={index}>
-                    <td className="tableHeading">{items}</td>
-                    <td className="tableHeading">{items}</td>
-                    <td className="tableHeading">{items}</td>
-                    <td className="tableHeading">{items}</td>
-                  </tr>
-                );
-              })}
+              {activity &&
+                activity.map((items, index) => {
+                  return (
+                    <tr key={index}>
+                      <td className="tableHeading">{items.activity}</td>
+                      <td className="tableHeading">{items.status}</td>
+                      <td className="tableHeading"></td>
+                      <td className="tableHeading"></td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

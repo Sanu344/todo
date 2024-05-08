@@ -11,9 +11,11 @@ todo.post("/add", auth, async (req, res) => {
 
   try {
     const data = await to.save();
+    const data3 = await Todo.find({ email: req.body.email });
     res.send({
       status: true,
       alert: true,
+      data: data3,
       messsage: "New Task Added ",
     });
   } catch (error) {
@@ -27,7 +29,7 @@ todo.post("/add", auth, async (req, res) => {
 
 todo.post("/all", auth, async (req, res) => {
   try {
-    const data = await to.find();
+    const data = await Todo.find({ email: req.body.email });
     res.send({
       status: true,
       data: data,
